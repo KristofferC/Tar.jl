@@ -194,14 +194,11 @@ function extract(
     check_extract_dir(dir)
     arg_read(tarball) do tar
         arg_mkdir(dir) do dir
-            if copy_symlinks === nothing
-                copy_symlinks = !can_symlink(dir)
-            end
             arg_write(skeleton) do skeleton
                 extract_tarball(
                     predicate, tar, dir,
                     skeleton = skeleton,
-                    copy_symlinks = copy_symlinks,
+                    copy_symlinks = something(copy_symlinks, !can_symlink(dir)),
                 )
             end
         end
