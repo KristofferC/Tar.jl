@@ -3,8 +3,7 @@ using Random
 using ArgTools
 
 import Tar
-
-include("git_tools.jl")
+import Pkg.GitTools
 
 const NON_STDLIB_TESTS = Main == @__MODULE__
 

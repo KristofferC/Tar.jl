@@ -132,13 +132,7 @@ function path_header(sys_path::AbstractString, tar_path::AbstractString)
     elseif isfile(st)
         size = filesize(st)
         type = :file
-        # Windows can't re-use the `lstat` result, we need to ask
-        # the system whether it's executable or not via `access()`
-        if Sys.iswindows()
-            mode = Sys.isexecutable(sys_path) ? 0o755 : 0o644
-        else
-            mode = iszero(filemode(st) & 0o100) ? 0o644 : 0o755
-        end
+        mode = iszero(filemode(st) & 0o100) ? 0o644 : 0o755
         link = ""
     else
         error("unsupported file type: $(repr(sys_path))")
